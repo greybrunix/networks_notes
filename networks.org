@@ -1,0 +1,228 @@
+
+* INTRODUCTION 
+
+
+* TCP
+  TCP connection req -> TCP con response -> GET -> <File> ->
+  
+* Host
+  application message breaks into packets, L bits, transmission rate R
+
+** packet transmission delay
+   time needed to trasmit L-bit = L(bits)/R(bits/sec)
+
+* Physical media
+  bit
+  physical layer
+  guided media - copper, fiber, coax
+  unguided media- radio
+** Twisted Pair (TP)
+   two insulated copper wires
+** coaxial cable: 
+   two concentric copper conducters
+   bidirectional
+   broadband: multiple chan on cable HFC
+** fiber optic cable
+   glass fiber carrying light pulses
+   high speed
+   low error rate
+** radio:
+* Network Core
+** queuing and loss
+   if arrival rate to link exceeds transmission rate of link:
+   1. packets queue
+   2. packets are dropped if memory (buffer) fills up
+** routing - determines source-destination route
+** forwarding - moves packets from router to router
+** ISP connections are in the order of N^2 if we were to connect every together
+   solution connect them to a "global ISP" and each global ISP together
+* loss and delay
+** packets queue in router buffers
+   packets arrival rate to link exceeds output link capacity
+   
+
+** Throughput  
+    throughput: rate at which bits trasferred between sender/receiver
+    instantaneous: any point in time
+    average: longer period of time
+** traceroute
+    provides delay measurement from source to router along end-end internet path 
+***  
+    sends three packets that will reach router i on path
+    router i returns packets to sender
+    sender times interval between transmission and reply
+* protocol layers,
+** layers
+  each layers implements a service via its own internal layer actions
+  relying on services provided by layer below
+** why layering
+*** dealing with complex systems
+**** explicit structure allows identification, relationship of complex system pieces
+**** modularization eases maintenance, updating of system
+     change of implementation of layer's service transparent to rest of system
+** Internet Protocol Stack
+   Top-Down so:
+*** 5: Application Layer
+    supporting network applications
+**** FTP, SMTP, HTTP
+*** 4: Transport Layer
+    process to process data transfer
+**** TCP, UDP
+*** 3: Network Layer
+    routing of datagrams from source to destination
+**** IP, routing protocols
+*** 2: Link Layer
+    data transfer between neighboring network elements
+**** Ethernet, 802.111 (WiFi), PPP
+*** 1: Physical Layer
+    bits "on the wire"
+** Encapsulation
+   Each layer is encapsulated in the layer above it 
+
+
+* APPLICATION LAYER - Principles of Network applications 
+** network app 
+*** write programs that
+    run on dif end systems
+    communicate over network
+*** no need to write softwares for network core devices
+    network core devices do not run user apps
+    apps on end systems allows for rapid app development, propagation
+
+
+* Application Architectures
+** Client-Server
+*** Server: 
+    always on host
+    permanent IP address
+    data centers for scaling
+*** Clients:
+    communicate with server
+    may be intermittently connected
+    may have dynamic IP addresses
+    do not communicate directly with each other
+** P2P architecture
+   no always on server
+   arbitrary end systems directly communicate
+   peers request service from other peers, provide service in return to other peers
+     SELF SCALABILITY - new peers bring new service capacity, as well as new service demands
+   peers are intermittently connected and change IP addresses
+     complex management
+* Processes communicating
+** process
+   program running within a host
+*** with the same host: Inter-process communication (defined by OS)
+*** in different hosts: by exhanging messages
+*** aside: apps with P2P architectures have client processes & server processes
+* Sockets
+  process sends/receives messages to/from it's SOCKET
+  socket is "like" a "door"
+* Addressing Processes
+** identifiers
+   Each host has an unique 32 bit IP
+   it includes both IP address and port number
+*** http 80 and mail server 25
+* App layer protocols
+** App layer protocol defines
+*** types of messages
+    request response
+*** message syntax
+    what fields in messages & how fields are delineated
+*** message semantics
+   meaning of info in fields
+*** rules
+   for when and how processes send & respond to messages
+** open protocols:
+    defined in RFCs
+    allows for interoperability
+*** for example HTTP SMPT
+** proprietary protocols
+    Skype, Zoom
+* Transport service in App Layer
+** data integrity
+   some apps require 100% reliable data transfer
+   others can tolerate loss
+** timing
+   some apps require low delay to be effective
+** throughput
+   some apps require minimum throughput
+   others make use of whatever they get
+** security
+   encryption, data integrity
+* Internet transport protocols
+** TCP
+*** reliable transport between sending and receiving process
+*** flow control
+    sender won't overwhelm receiver
+*** congestion control
+    throttle sender when network overloaded
+*** does not provide 
+    timing, minimum throughput guarantee, security
+*** connection-oriented
+    setup required between client and server processes
+** UDP
+*** unreliable data transfer between sending and receiving process
+*** does not provide:
+**** reliablity
+**** flow control
+**** congestion control
+**** timing
+**** throughput guarantee
+**** security
+**** connection setup
+** Q: Why bother with UDP?
+*** A: It's faster, some apps don't really need all these attributes that TCP has;
+      in fact for those apps it might be a detriment as they just need for the transfer to be fast,
+      video data and gaming data wouldn't make sense to have all these "perks" as it'd made the transfer slow.
+*
+
+** SECURING TCP
+*** Vannilla tcp & udp sockets:
+    no encryption
+    cleartext passwords sent in to socket traverse internet in cleartext
+*** Transport Layer Security
+    encrypted TCP connections
+    data integrity
+    end-point authentication
+*** TSL implemented in application layer
+    apps that use TSL libraries that use TCP in turn
+    cleartext sent into socket traverse internet encrypted
+
+
+* APPLICATION LAYER - Web and HTTP 
+** web page consists of objects
+*** objects can be HTML files, JPEG images, JAVA applet, audio file...
+** web page consists of base HTML file which includes several objectes
+*** objects are addressable by a URL
+**** for example www.someschool.edu is the host name
+**** /someDept/pic.gif is the path name
+
+* HTTP: hypertext transfer protocol
+      Web's application layer protocol
+      Client/server model
+      client -> browser that requests and displays Web objects
+      server: web server sends objects in response to requests
+** Uses TCP
+      Iniciates TCP connection -> server accepts -> HTTP messages exchanged bt browser and Web server -> Connection closed
+** HTTP is "stateless"
+      Server maintains no information about past client requests
+*** An aside: protocols that maintain state are complex for:
+       past history must be maintained
+       if server/client crashes, their views of "state" may be inconsistent
+* HTTP connection   
+** non persistent HTTP
+*** at most one object sent over TCP connection
+    connection then closed
+*** dowloading multiple objects required multiple connections
+** persistent HTTP
+*** multiple objects can be sent over single TCP connection between client, server
+
+
+* Method Types
+** HTTP/1.0
+*** GET POST HEAD
+** HTTP/1.1
+*** GET POST HEAD PUT AND DELETE
+
+
+*  
