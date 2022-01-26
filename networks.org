@@ -224,5 +224,111 @@
 ** HTTP/1.1
 *** GET POST HEAD PUT AND DELETE
 
+    
+* DNS: domain Name System
+  people
+  Internet hosts, routers
+** Domain Name System:
+   distributed database implemented in hierarchy of any name servers
+   application-layer protocol: hosts, name servers communicate to resolve names
+** services, structure
+*** services
+    hostname to IP address translation
+    host aliasing
+    mails server aliasing
+    load distribution
+    replicatied Web servers
+*** Why not centralize
+    single point of failure
+    traffic volume
+    distant centralized database
+    maintenance
+**** DOESN'T SCALE
+** Root name servers
+   contacted by local name server that cannot resolve name
+   root name server:
+       contacts authoritative name server if name mapping not known
+       gets mapping
+       returns mapping to local name server
+** TLD, AUTHORITATIVE SERVERS
+*** top-level domain (TLD) servers: 
+    responsible for com,org,net,edu,aero,etc and all top level country domains
+    Network solutions maintains servers for .com TLD
+    Educause for .edu TLD
+*** authoritative DNS servers:
+    organization's own DNS server(s), providing hostname to IP mappings for organization's named hosts
+    can be maintained by organization or service provider
+** Local DNS name server
+   does not strictly belong to hierarchy
+   each ISP has one
 
-*  
+
+* NETWORK LAYER
+
+* NETWORK LAYER - introduction
+  transport segment from sending to receiving host
+  on sending side encapsulates segments into datagrams
+  on receiving side, delivers segments to transport layer
+  network layer protocols in every host, router
+  router examines header fields in all IP datagrams passing through it
+
+
+* NETWORK LAYER - virtual circuits and datagram networks
+
+* Connection/Connectionless Network Service
+  datagram network provides network-layer connectionless service
+  virtual-circuit network provides network-layer connection service
+  analogous to TCP/UDP connection-oriented / connectionless transport
+* Virtual Circuits
+  call setup, teardown for each call
+  each packet carries VC identifier
+
+* NETWORK LAYER - IP: Internet Protocol
+|transport layer |------------------- TCP , UDP--------------------------------------- |
+|network layer   |routing protocols <-> forwarding table | IP protocol | ICMP protocol |
+|link layer      |-------------------------------------------------------------------- |
+|physicial layer |-------------------------------------------------------------------- |
+
+*** routing protocols <-> forwarding table 
+**** path selection
+**** RIP, OSPF, BGP
+*** IP protocol
+**** addressing conventions
+**** datagram format
+**** packet handling conventions 
+*** ICMP protocol
+**** error reporting
+**** router "signaling"
+** ICMP: Internet Control Message Protocol
+   used by hosts & routers to communicate network-level information
+         *** error reporting: unreachable host, network, port, protocol
+	 *** echo request/reply (used by ping)
+   network-layer "above" IP:
+         *** ICMP msgs carried in IP datagrams
+*** ICMP message: 
+    type, code plus first 8 bytes of IP datagram causing error
+** Traceroute and ICMP
+   source sends series of UDP segments (or ICMP with flag -1) to dest
+       *** first dest has TTL = 1
+       *** second set has TTL = 2, etc.
+       *** unlikely port number
+   when nth set of datagrams arrives to nth router:
+       *** router discards datagrams
+       *** and sends to source ICMP messages
+       *** ICMP messages includes name of router and IP
+   when ICMP messages arrives, source records RTT
+*** stopping criteria:
+    UDP segment eventually arrives at destination host
+    destination returns ICMP "port unreachable" message
+    source stops
+** IP datagram format
+< -------------------------- 32 bits ----------------------- >
+| ver | head len | type of service |         length          |
+|        16-bit identifier         | flgs |  fragment offset |
+|  time to live  |    protocol     |     header checksum     |
+|                  32 bit source IP address                  |
+|                32 bit destination IP address               |
+|                       options (if any)                     |
+|    data (variable length, typically a TCP or UDP segment   |
+
+
