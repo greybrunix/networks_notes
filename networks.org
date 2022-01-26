@@ -324,11 +324,11 @@
 ** IP datagram format
 < -------------------------- 32 bits ----------------------- >
 | ver | head len | type of service |         length          |
-|        16-bit identifier         | flgs |  fragment offset |
-|  time to live  |    protocol     |     header checksum     |
-|                  32 bit source IP address                  |
-|                32 bit destination IP address               |
-|                       options (if any)                     |
-|    data (variable length, typically a TCP or UDP segment   |
+|        16-bit identifier         | flgs |  fragment offset||
+|  time to live  |    protocol     |     header checksum   | |
+|                  32 bit source IP address               || |
+|                32 bit destination IP address            || |
+|                       options (if any)                  | ||
+|   data (variable length, typically a TCP or UDP segment || |
 
 
