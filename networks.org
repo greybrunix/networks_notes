@@ -330,5 +330,9 @@
 |                32 bit destination IP address            || |
 |                       options (if any)                  | ||
 |   data (variable length, typically a TCP or UDP segment || |
+** IP fragmentation
+   trivial
 
 
+
+* LINK LAYER
