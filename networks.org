@@ -421,7 +421,3 @@ two or more simultaneous transmissions by nodes: interference
 ** Random Access
 
 
-
-
-* TODO good luck for the exam <3
-
