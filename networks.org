@@ -335,4 +335,93 @@
 
 
 
-* LINK LAYER
+* LINK LAYER -- Introduction 
+** Terminology
+   hosts and routers: *** nodes
+   communication channels that connect nodes : *** links
+          wired links, wireless links, LANs
+   layer-2 packet: frame,
+        it encapsulates the datagram
+*** Note
+    data-link layer has the responsability of transferring datagram from one node to physically adjacent node over a link
+** Context
+   datagram transferred by different link protocols over different links
+   each link protocol provides different services
+*** Analogy:
+    trip from Braga to Algarve
+    car: Braga to Porto
+    plane: Porto to Lisbon
+    train: Lisbon to Algarve
+    tourist = datagram
+    transport segment = communication link
+    transportation mode = link layer protocol
+    travel agent = routing algorithm
+** Link layer services
+*** framing, link access:
+    encapsulates datagram into frame, adding header, trailer
+    obtain channel access if shared medium
+    "MAC" addresses used in frame headers to identify source, dest
+         different from IP address!
+**** Note on MAC address and IP 
+       A MAC address is specific to the hardware whereas an IP address is assigned by the network
+*** reliable delivery between adjacent nodes
+    seldom used on low bit-error link
+    wireless links: high error rates
+*** flow control
+    pacing between adjacent sending and receiving nodes
+*** error detection 
+    errors caused by signal attenuation, noise
+    receiver detects presense of errors:
+        signals sender for retransmission or drop frame (rdt vs no rdt)
+*** error correction:
+    receiver identifies and corrects bit error(s) without resorting to retransmission
+*** half duplex and full duplex
+    with half duples, nodes at both ends of link can transmit, but not at the same time
+** where is it implemented?
+   in each and every host
+   in adaptors (aka network interface card (NIC) or on a chip
+   attaches into host's system buses
+   combination of hardware, software, firmware
+* LINK LAYER - Multiple Access Protocols
+**  two types of "links"
+*** point to point
+    PPP for dial up access; HDLC for point to point or point to multipoint
+    point to point link between ethernet switch host
+*** Broadcast (shared wire or medium)
+    old fashioned Ethernet
+    upstream HFC (Hybrid Fiber Coax)
+    802.11 wireless LAN
+single shared broadcast channel
+two or more simultaneous transmissions by nodes: interference
+     collision if nodes receive two or more signals at the same time
+
+** multiple access protocol
+   distributed algorithm that determines how nodes share channel, i.e. determine when node can transmit
+   communication about channel sharing must use channel itself
+       no out-of-band channel for communication
+* An Ideal multiple access Protocol
+** given: broadcast channel of rate R bps
+** desiderata: 
+   1. when one node wants to transmit, it can send at rate R.
+   2. when M nodes want to transmit, each can send at average rate R/M
+   3. fully decentralized
+      no special node to coordinate transmissions
+   4. simple
+* MAC protocols
+** taxonomy
+   three broad classes
+*** channel partitioning
+    divide channel into smaller "Pieces" (time slots, frequency,...)
+    allocate piece to node for EXCLUSIVE use
+*** random access
+    cannel not divided, allow collisions
+    "recover" from collisions
+*** "taking turns"
+    nodes take turns, but nodes with more to send can take longer turns
+** Random Access
+
+
+
+
+* TODO good luck for the exam <3
+
